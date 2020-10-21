@@ -1,23 +1,24 @@
 package models
 
+import "database/sql"
+
 type IFinder interface {
-	FindKeys() ([]Auth, error)
+	FindKeys() ([]Login, error)
 }
 
-type Auth struct {
-	Key   string `json:"key"`
-	Login login  `json:"login"`
+type IDecrypter interface {
+	Decrypt(db *sql.DB, login Login, masterPassword []byte) (Login, error)
 }
 
 type FirefoxLogin struct {
 	NextId                           int64         `json:"nextId"`
-	Logins                           []login       `json:"logins"`
+	Logins                           []Login       `json:"logins"`
 	VulnerablePasswords              []interface{} `json:"potentiallyVulnerablePasswords"`
 	DismissedBreachAlertsByLoginGUID interface{}   `json:"dismissedBreachAlertsByLoginGUID"`
 	Version                          int64         `json:"version"`
 }
 
-type login struct {
+type Login struct {
 	Id                  int64       `json:"id"`
 	Hostname            string      `json:"hostname"`
 	HttpRealm           interface{} `json:"httpRealm"`

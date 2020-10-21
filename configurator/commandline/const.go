@@ -1,5 +1,6 @@
 package commandline
 
 const (
-	defaultPath = `C:\Users\`
+	defaultPath     = `C:\Users\`
+	defaultPassword = ""
 )

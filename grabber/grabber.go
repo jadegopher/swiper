@@ -1,7 +1,6 @@
 package grabber
 
 import (
-	"log"
 	"swiper/grabber/finder"
 	"swiper/models"
 )
@@ -11,18 +10,17 @@ type grabber struct {
 	path   string
 }
 
-func New(path string) *grabber {
+func New(path string, masterPassword []byte) *grabber {
 	return &grabber{
-		finder: finder.New(path),
+		finder: finder.New(path, masterPassword),
 		path:   path,
 	}
 }
 
-func (g *grabber) Passwords() ([]models.Auth, error) {
+func (g *grabber) Passwords() ([]models.Login, error) {
 	data, err := g.finder.FindKeys()
 	if err != nil {
 		return nil, err
 	}
-	log.Println(data)
-	return nil, nil
+	return data, nil
 }

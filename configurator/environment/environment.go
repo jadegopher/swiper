@@ -17,5 +17,9 @@ func (e *environment) ReadConfig() (models.Config, error) {
 	if !in {
 		return models.Config{}, KeyNotFoundError
 	}
-	return models.Config{MozillaPath: path}, nil
+	password, in := os.LookupEnv("PASSWORD")
+	if !in {
+		return models.Config{}, KeyNotFoundError
+	}
+	return models.Config{MozillaPath: path, MasterPassword: []byte(password)}, nil
 }

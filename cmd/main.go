@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"swiper/configurator"
 	"swiper/grabber"
@@ -14,12 +15,16 @@ func main() {
 		log.Fatal(err)
 	}
 
-	grab := grabber.New(config.MozillaPath)
+	grab := grabber.New(config.MozillaPath, config.MasterPassword)
 
-	passwords, err := grab.Passwords()
+	data, err := grab.Passwords()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	log.Println(passwords)
+	if config.StoreFilePath == "" {
+		for _, elem := range data {
+			log.Println(fmt.Sprintf("Hostname: '%s'\n\tUsername: '%s'\n\tPassword: '%s'", elem.Hostname, elem.UsernameField, elem.PasswordField))
+		}
+	}
 }

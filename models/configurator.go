@@ -5,5 +5,7 @@ type IConfigurator interface {
 }
 
 type Config struct {
-	MozillaPath string `json:"mozilla_path"`
+	MozillaPath    string `json:"mozilla_path"`
+	MasterPassword []byte `json:"master_password"`
+	StoreFilePath  string `json:"store_file_path"`
 }

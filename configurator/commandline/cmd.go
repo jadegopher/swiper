@@ -15,9 +15,12 @@ func New() models.IConfigurator {
 
 func (c *cmd) ReadConfig() (models.Config, error) {
 	var conf string
-	flag.StringVar(&conf, "flag", defaultPath, "path to Firefox")
+	var password string
+	flag.StringVar(&conf, "path", defaultPath, "path to Firefox")
+	flag.StringVar(&password, "pwd", defaultPassword, "master password")
+	flag.Parse()
 	if conf == defaultPath {
 		return models.Config{}, FlagNotSetErr
 	}
-	return models.Config{MozillaPath: conf}, nil
+	return models.Config{MozillaPath: conf, MasterPassword: []byte(password)}, nil
 }
