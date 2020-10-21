@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"swiper/configurator"
 	"swiper/grabber"
+	"swiper/saver"
 )
 
 func main() {
@@ -22,9 +22,8 @@ func main() {
 		log.Fatal(err)
 	}
 
-	if config.StoreFilePath == "" {
-		for _, elem := range data {
-			log.Println(fmt.Sprintf("Hostname: '%s'\n\tUsername: '%s'\n\tPassword: '%s'", elem.Hostname, elem.UsernameField, elem.PasswordField))
-		}
+	save := saver.New(config.StoreFilePath)
+	if err := save.Save(data); err != nil {
+		log.Fatal(err)
 	}
 }
